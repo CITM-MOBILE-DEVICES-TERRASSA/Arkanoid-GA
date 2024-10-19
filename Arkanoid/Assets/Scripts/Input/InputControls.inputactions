@@ -1,0 +1,34 @@
+{
+    "name": "InputControls",
+    "maps": [
+        {
+            "name": "Bar",
+            "id": "a2d2f10f-912a-4e80-b535-523a35260080",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "55ed5faa-db3d-4390-b53e-c1c79ffd73d8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "016e5e4e-6d91-411e-a3b6-2b583c4bbb79",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
