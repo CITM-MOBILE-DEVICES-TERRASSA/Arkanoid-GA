@@ -4,42 +4,51 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float speed = 3f;  
+    [SerializeField] private float speed = 3f;
 
     private float ballRadius;
     private Vector2 direction;
     private Vector2 screenBounds;
-    
-    void Awake()
+
+    private void Awake()
     {
         direction = new Vector2(1, 1).normalized;
-        ballRadius = GetComponent<SpriteRenderer>().bounds.extents.x;
+        ballRadius = Mathf.Max(GetComponent<SpriteRenderer>().bounds.extents.x, GetComponent<SpriteRenderer>().bounds.extents.y);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
     }
 
-    void Update()
+    private void Update()
     {
         MoveBall();
         UpdateDirection();
     }
 
-    void MoveBall()
+    private void MoveBall()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
-    void UpdateDirection()
+    private void UpdateDirection()
     {
         Vector2 position = transform.position;
 
-        if (Mathf.Abs(position.x) >= screenBounds.x - ballRadius)
-            direction.x = -direction.x;
+        position.x = CheckBounds(position.x, ballRadius, screenBounds.x, ref direction.x);
+        position.y = CheckBounds(position.y, ballRadius, screenBounds.y, ref direction.y);
 
-        if (Mathf.Abs(position.y) >= screenBounds.y - ballRadius)
-            direction.y = -direction.y;
+        transform.position = position;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private float CheckBounds(float pos, float radius, float bound, ref float dir)
+    {
+        if (pos + radius > bound || pos - radius < -bound)
+        {
+            dir = -dir;
+            pos = Mathf.Clamp(pos, -bound + radius, bound - radius);
+        }
+        return pos;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 collisionNormal = collision.contacts[0].normal;
         direction = Vector2.Reflect(direction, collisionNormal).normalized;
