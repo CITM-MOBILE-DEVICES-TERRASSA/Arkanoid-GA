@@ -85,6 +85,7 @@ public class Ball : MonoBehaviour
         transform.position = Vector2.zero;
         direction = new Vector2(1, 1).normalized;
         speed = initialSpeed;
+        LivesManager.Instance.LoseLife();
         AudioManager.Instance.PlayFx(resetFx);
     }
 }
