@@ -5,22 +5,28 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
+    [SerializeField] private float speedIncrease = 0.1f;
 
+    private float initialSpeed;
     private float ballRadius;
     private Vector2 direction;
     private Vector2 screenBounds;
+    private Transform bar;
 
     private void Awake()
     {
         direction = new Vector2(1, 1).normalized;
         ballRadius = Mathf.Max(GetComponent<SpriteRenderer>().bounds.extents.x, GetComponent<SpriteRenderer>().bounds.extents.y);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        bar = FindObjectOfType<Bar>().transform;
+        initialSpeed = speed;
     }
 
     private void Update()
     {
         MoveBall();
         UpdateDirection();
+        CheckIfBallHitsBottom();
     }
 
     private void MoveBall()
@@ -44,6 +50,7 @@ public class Ball : MonoBehaviour
         {
             dir = -dir;
             pos = Mathf.Clamp(pos, -bound + radius, bound - radius);
+            IncreaseSpeed();
         }
         return pos;
     }
@@ -52,5 +59,26 @@ public class Ball : MonoBehaviour
     {
         Vector2 collisionNormal = collision.contacts[0].normal;
         direction = Vector2.Reflect(direction, collisionNormal).normalized;
+        IncreaseSpeed();
+    }
+
+    private void IncreaseSpeed()
+    {
+        speed += speedIncrease;
+    }
+
+    private void CheckIfBallHitsBottom()
+    {
+        if (transform.position.y - ballRadius < bar.position.y - bar.localScale.y / 2)
+        {
+            ResetBall();
+        }
+    }
+
+    private void ResetBall()
+    {
+        transform.position = Vector2.zero;
+        direction = new Vector2(1, 1).normalized;
+        speed = initialSpeed;
     }
 }
