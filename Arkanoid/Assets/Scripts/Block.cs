@@ -12,6 +12,7 @@ public class Block : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+            ScoreManager.Instance.AddScore(score);
             health--;
             if (health <= 0)
             {
