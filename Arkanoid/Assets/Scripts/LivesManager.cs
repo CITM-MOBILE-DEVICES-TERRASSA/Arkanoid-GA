@@ -4,30 +4,20 @@ using UnityEngine;
 
 public class LivesManager : MonoBehaviour
 {
-    private static LivesManager instance;
-    public static LivesManager Instance { get => instance; }
-
     [Header("Lives")]
     [SerializeField] private int initialLives = 3;
     [Header("UI")]
     [SerializeField] private Transform livesPanel;
     [SerializeField] private GameObject lifePrefab;
+    [SerializeField] private GameObject gameOverPanel;
+    [Header("Audio")]
+    [SerializeField] private AudioClip loseLifeFx;
 
     private int currentLives;
     private List<GameObject> lifeIcons = new List<GameObject>();
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         currentLives = initialLives;
         InitializeLivesUI();
     }
@@ -52,12 +42,11 @@ public class LivesManager : MonoBehaviour
 
     public void LoseLife()
     {
-        if (currentLives > 0)
-        {
-            currentLives--;
-            UpdateLivesUI();
-        }
+        currentLives--;
+        UpdateLivesUI();
+        AudioManager.Instance.PlayFx(loseLifeFx);
     }
 
-    public bool IsAlive() => currentLives > 0;
+    public bool IsAlive() => currentLives > 1;
+    public void GameOver() => gameOverPanel.SetActive(true);
 }

@@ -25,6 +25,9 @@ public class Bar : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.IsPlaying())
+            return;
+            
         if (isDragging)
             HandleMouseMovement();
     }

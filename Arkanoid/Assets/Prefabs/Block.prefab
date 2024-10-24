@@ -144,3 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  score: 1
+  particlePrefab: {fileID: 3507379547406662148, guid: 81c0afe75b4fe484cb299bb60a9144d1, type: 3}

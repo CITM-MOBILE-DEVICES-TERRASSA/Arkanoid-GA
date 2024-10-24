@@ -9,7 +9,6 @@ public class Ball : MonoBehaviour
     [SerializeField] private float speedIncrease = 0.1f;
     [Header("Audio")]
     [SerializeField] private AudioClip bounceFx;
-    [SerializeField] private AudioClip resetFx;
 
     private float initialSpeed;
     private float ballRadius;
@@ -28,6 +27,9 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.IsPlaying())
+            return;
+
         MoveBall();
         UpdateDirection();
         CheckIfBallHitsBottom();
@@ -85,7 +87,6 @@ public class Ball : MonoBehaviour
         transform.position = Vector2.zero;
         direction = new Vector2(1, 1).normalized;
         speed = initialSpeed;
-        LivesManager.Instance.LoseLife();
-        AudioManager.Instance.PlayFx(resetFx);
+        GameManager.Instance.LoseLife();
     }
 }

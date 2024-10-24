@@ -12,11 +12,12 @@ public class Block : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            ScoreManager.Instance.AddScore(score);
+            GameManager.Instance.AddScore(score);
             health--;
             if (health <= 0)
             {
                 Destroy(gameObject);
+                Instantiate(particlePrefab, transform.position, Quaternion.identity);
             }
         }
     }
