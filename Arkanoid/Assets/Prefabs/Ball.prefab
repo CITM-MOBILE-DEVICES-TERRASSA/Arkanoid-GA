@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -138,7 +138,6 @@ MonoBehaviour:
   speed: 3
   speedIncrease: 0.1
   bounceFx: {fileID: 8300000, guid: 7230fd94e5d0350419540c6930690e66, type: 3}
-  resetFx: {fileID: 8300000, guid: e7e75fdaa24439340b3f4fd7314a56e3, type: 3}
 --- !u!50 &7536741682277125344
 Rigidbody2D:
   serializedVersion: 4

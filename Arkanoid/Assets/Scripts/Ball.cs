@@ -15,14 +15,17 @@ public class Ball : MonoBehaviour
     private Vector2 direction;
     private Vector2 screenBounds;
     private Transform bar;
+    private Vector3 initialPosition;
 
     private void Awake()
     {
-        direction = new Vector2(1, 1).normalized;
         ballRadius = Mathf.Max(GetComponent<SpriteRenderer>().bounds.extents.x, GetComponent<SpriteRenderer>().bounds.extents.y);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         bar = FindObjectOfType<Bar>().transform;
-        initialSpeed = speed;
+        initialSpeed = speed;        
+        initialPosition = bar.position + Vector3.up * 0.5f;  
+        direction = new Vector2(1, 1).normalized;
+        transform.position = initialPosition;        
     }
 
     private void Update()
@@ -84,7 +87,7 @@ public class Ball : MonoBehaviour
 
     private void ResetBall()
     {
-        transform.position = Vector2.zero;
+        transform.position = initialPosition;
         direction = new Vector2(1, 1).normalized;
         speed = initialSpeed;
         GameManager.Instance.LoseLife();
