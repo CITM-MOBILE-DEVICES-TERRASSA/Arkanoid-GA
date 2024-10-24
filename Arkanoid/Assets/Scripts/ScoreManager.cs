@@ -8,9 +8,12 @@ public class ScoreManager : MonoBehaviour
     private static ScoreManager instance;
     public static ScoreManager Instance { get => instance; }
 
+    [Header("UI")]
     [SerializeField] private Transform scorePanel;
     [SerializeField] private Sprite[] numberSprites;
     [SerializeField] private GameObject digitPrefab;
+    [Header("Audio")]
+    [SerializeField] private AudioClip scoreFx;
 
     private int score = 0;
     private int highScore = 0;
@@ -34,6 +37,7 @@ public class ScoreManager : MonoBehaviour
     {
         score += value;
         UpdateScoreText();
+        AudioManager.Instance.PlayFx(scoreFx);
         CheckIfHighScore();
     }
 

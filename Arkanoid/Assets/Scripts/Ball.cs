@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    [Header("Ball")]
     [SerializeField] private float speed = 3f;
     [SerializeField] private float speedIncrease = 0.1f;
+    [Header("Audio")]
+    [SerializeField] private AudioClip bounceFx;
+    [SerializeField] private AudioClip resetFx;
 
     private float initialSpeed;
     private float ballRadius;
@@ -65,6 +69,7 @@ public class Ball : MonoBehaviour
     private void IncreaseSpeed()
     {
         speed += speedIncrease;
+        AudioManager.Instance.PlayFx(bounceFx);
     }
 
     private void CheckIfBallHitsBottom()
@@ -80,5 +85,6 @@ public class Ball : MonoBehaviour
         transform.position = Vector2.zero;
         direction = new Vector2(1, 1).normalized;
         speed = initialSpeed;
+        AudioManager.Instance.PlayFx(resetFx);
     }
 }
